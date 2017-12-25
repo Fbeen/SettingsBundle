@@ -1,0 +1,25 @@
+{
+    "name" : "fbeen/settingsbundle",
+    "description" : "This Bundle adds settings out of the database integration on top of the Symfony framework. It lets you design application-settings which can be maintained by the owner or administrator from the website.",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Frank Beentjes",
+        "email" : "frankbeen@gmail.com"
+    }],
+    "keywords" : [
+        "Settings Bundle"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+        "php": "^5.5.9|^7.0",
+        "symfony/framework-bundle": "^2.7|^3.3"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Fbeen\\SettingsBundle" : ""
+        }
+    },
+    "target-dir" : "Fbeen/SettingsBundle"
+}
