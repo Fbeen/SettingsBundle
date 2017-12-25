@@ -26,7 +26,7 @@ class SettingController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('setting_index');
+            return $this->redirectToRoute('fbeen_settings_edit');
         }
 
         return $this->render('FbeenSettingsBundle:Settings:edit.html.twig', array(
@@ -73,7 +73,7 @@ class SettingController extends Controller
             }
             $em->flush();
 
-            return $this->redirectToRoute('setting_developer');
+            return $this->redirectToRoute('_fbeen_settings_developer');
         }
 
         return $this->render('FbeenSettingsBundle:Settings:developer.html.twig', array(
