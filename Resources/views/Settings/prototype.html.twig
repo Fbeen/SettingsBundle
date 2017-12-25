@@ -1,0 +1,9 @@
+{% trans_default_domain 'fbeen_settings' %}
+
+<tr>
+    <td class="pb-0">{{ form_row(form.identifier) }}</td>
+    <td class="pb-0">{{ form_row(form.type) }}</td>
+    <td class="pb-0">{{ form_row(form.value) }}</td>
+    <td class="pb-0">{{ form_row(form.required) }}</td>
+    <td class="pb-0"><button type="button" class="btn btn-danger">{{ 'delete'|trans }}</button></td>
+</tr>

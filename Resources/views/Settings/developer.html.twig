@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'fbeen_settings' %}
+
+{% form_theme form _self %}
+{% block _fbeen_settingsbundle_settings_settings_entry_widget %}
+    {% include 'FbeenSettingsBundle:Settings:prototype.html.twig' with {'form':form} %}
+{% endblock %}
+
+{% block title %}
+    {{ 'modify_settings'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'modify_settings'|trans }}</h1>
+
+    {{ form_start(form) }}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>{{ 'identifier'|trans }}</th>
+                <th>{{ 'type'|trans }}</th>
+                <th>{{ 'value'|trans }}</th>
+                <th>{{ 'required'|trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="collection" data-prototype="{{ form_widget(form.settings.vars.prototype)|e('html_attr') }}">
+            {% for setting in form.settings %}
+                {% include 'FbeenSettingsBundle:Settings:prototype.html.twig' with {'form':setting} %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-success">{{ 'save'|trans }}</button>
+    <button type="button" id="add-button" class="btn btn-primary float-right mr-5 mb-5">{{ 'add_new'|trans }}</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function () {
+
+            var $collectionHolder = $('#collection');
+
+            function addSetting() {
+                var prototype = $collectionHolder.data('prototype');
+                var index = $collectionHolder.data('index');
+                var newForm = prototype;
+                newForm = newForm.replace(/__name__/g, index);
+                $collectionHolder.data('index', index + 1);
+                $collectionHolder.append(newForm);
+            }
+
+            $collectionHolder.data('index', $collectionHolder.find('tr').length);
+
+            $('#add-button').click(function (e) {
+                addSetting();
+            });
+
+            $('#collection').on('click', 'tr td button', function (e) {
+                $(this).parents('tr').remove();
+            });
+        });
+    </script>
+{% endblock %}

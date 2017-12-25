@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'fbeen_settings' %}
+
+{% block title %}
+    {{ 'settings'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'settings'|trans }}</h1>
+
+    {{ form_start(form) }}
+    <table class="table table-bordered">
+        <tbody>
+            {% for setting in form.settings %}
+                <tr>
+                    <th>{{ setting.vars.data.identifier }}</th>
+                    <td class="pb-0">{{ form_row(setting) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-success">{{ 'save'|trans }}</button>
+    {{ form_end(form) }}
+{% endblock %}

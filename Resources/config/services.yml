@@ -1,0 +1,19 @@
+services:
+    fbeen_settings.settings_helper:
+        class: Fbeen\SettingsBundle\Service\SettingsHelper
+        arguments: ['@service_container']
+
+    fbeen_settings.twig_extension:
+        class: Fbeen\SettingsBundle\Twig\TwigExtension
+        arguments: ['@fbeen_settings.settings_helper']
+        public: false
+        tags:
+            - { name: twig.extension }
+            
+    Fbeen\SettingsBundle\Form\SettingType:
+        arguments: ['@fbeen_settings.settings_helper']
+        tags: [form.type]
+        
+    Fbeen\SettingsBundle\Form\DevSettingType:
+        arguments: ['@fbeen_settings.settings_helper']
+        tags: [form.type]

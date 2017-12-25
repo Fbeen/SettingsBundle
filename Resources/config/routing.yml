@@ -1,0 +1,5 @@
+
+fbeen_settings_edit:
+    path:      /settings/edit
+    defaults:  { _controller: FbeenSettingsBundle:Setting:edit }
+    methods:  [GET, POST]
