@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @author Frank Beentjes <frankbeen@gmail.com>
  */
-class Settings
+class SettingContainer
 {
     private $settings;
     
@@ -23,7 +23,7 @@ class Settings
      *
      * @param \Fbeen\SettingsBundle\Entity\Setting $setting
      *
-     * @return Settings
+     * @return SettingContainer
      */
     public function addSetting(\Fbeen\SettingsBundle\Entity\Setting $setting)
     {
@@ -47,7 +47,7 @@ class Settings
      *
      * @param \Doctrine\Common\Collections\Collection
      * 
-     * @return Settings
+     * @return SettingContainer
      */
     public function setSettings(ArrayCollection $settings)
     {

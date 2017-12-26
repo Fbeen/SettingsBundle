@@ -1,7 +1,7 @@
 services:
     fbeen_settings.settings_helper:
         class: Fbeen\SettingsBundle\Service\SettingsHelper
-        arguments: ['@service_container']
+        arguments: ['@doctrine.orm.entity_manager']
 
     fbeen_settings.twig_extension:
         class: Fbeen\SettingsBundle\Twig\TwigExtension

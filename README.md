@@ -1,13 +1,14 @@
 # FbeenSettingsBundle
 
-This Bundle adds settings out of the database integration on top of the Symfony framework. It lets you design application-settings which can be maintained by the owner or administrator from the website. 
+This Bundle adds global settings out of the database integration on top of the Symfony framework. It lets you design application-settings which can be maintained by the owner or administrator from the website. 
 
 ### Features include:
 
 * Unlimmited setting fields
 * Bootstrap ready pages and forms
 * Settings can be made and deleted by you developer when you add yourself the ROLE_SUPER_ADMIN in a form
-* The value of the setting fields can be changed bij the users that have ROLE_ADMINISTRATOR in a form
+* The value of the setting fields can be changed by the users that have ROLE_ADMINISTRATOR in a form
+* The value of the setting fields can be changed by the application
 * Five formtypes: text, email, boolean, integer and decimal.
 * Form validation dependend on the formtype.
 
@@ -91,3 +92,13 @@ Or that you want to render the setting in Twig:
 {{ setting('shipping_price') }}
 ```
 
+Update a setting:
+```
+$this->get('fbeen_settings.settings_helper')->updateSetting('shipping_price', $price);
+```
+Or maybe you want to use a setting as a page-view counter:
+```
+$helper = $this->get('fbeen_settings.settings_helper');
+$counter = $helper->getSetting('page_views');
+$helper->updateSetting('page_views', ++$counter);
+```

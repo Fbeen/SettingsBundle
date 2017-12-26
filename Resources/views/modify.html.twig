@@ -3,8 +3,8 @@
 {% trans_default_domain 'fbeen_settings' %}
 
 {% form_theme form _self %}
-{% block _fbeen_settingsbundle_settings_settings_entry_widget %}
-    {% include 'FbeenSettingsBundle:Settings:prototype.html.twig' with {'form':form} %}
+{% block _fbeen_settingsbundle_settingcontainer_settings_entry_widget %}
+    {% include '@FbeenSettingsBundle/Resources/views/prototype.html.twig' with {'form':form} %}
 {% endblock %}
 
 {% block title %}
@@ -27,7 +27,7 @@
         </thead>
         <tbody id="collection" data-prototype="{{ form_widget(form.settings.vars.prototype)|e('html_attr') }}">
             {% for setting in form.settings %}
-                {% include 'FbeenSettingsBundle:Settings:prototype.html.twig' with {'form':setting} %}
+                {% include '@FbeenSettingsBundle/Resources/views/prototype.html.twig' with {'form':setting} %}
             {% endfor %}
         </tbody>
     </table>

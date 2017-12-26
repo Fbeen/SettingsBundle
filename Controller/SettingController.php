@@ -18,9 +18,9 @@ class SettingController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         
-        $settings = $this->get('fbeen_settings.settings_helper')->getSettings();
+        $settingContainer = $this->get('fbeen_settings.settings_helper')->getSettingContainer();
 
-        $form = $this->createForm('Fbeen\SettingsBundle\Form\SettingsType', $settings);
+        $form = $this->createForm('Fbeen\SettingsBundle\Form\SettingContainerType', $settingContainer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -29,7 +29,7 @@ class SettingController extends Controller
             return $this->redirectToRoute('fbeen_settings_edit');
         }
 
-        return $this->render('FbeenSettingsBundle:Settings:edit.html.twig', array(
+        return $this->render('@FbeenSettingsBundle/Resources/views/edit.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -37,18 +37,18 @@ class SettingController extends Controller
     /**
      * Modify settings for developers
      */
-    public function developerAction(Request $request)
+    public function modifyAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
         
-        $settings = $this->get('fbeen_settings.settings_helper')->getSettings();
+        $settingContainer = $this->get('fbeen_settings.settings_helper')->getSettingContainer();
 
         $originalSettings = new ArrayCollection();
-        foreach ($settings->getSettings() as $setting) {
+        foreach ($settingContainer->getSettings() as $setting) {
             $originalSettings->add($setting);
         }
 
-        $form = $this->createForm('Fbeen\SettingsBundle\Form\DevSettingsType', $settings);
+        $form = $this->createForm('Fbeen\SettingsBundle\Form\DevSettingContainerType', $settingContainer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,7 +58,7 @@ class SettingController extends Controller
              * Delete Setting entities from the database that are missing in the collection
              */
             foreach($originalSettings as $originalSetting) {
-                if (false === $settings->getSettings()->contains($originalSetting)) {
+                if (false === $settingContainer->getSettings()->contains($originalSetting)) {
                     $em->remove($originalSetting);
                 }
             }
@@ -66,7 +66,7 @@ class SettingController extends Controller
             /*
              * Persist new generated Setting entities
              */
-            foreach($settings->getSettings() as $setting) {
+            foreach($settingContainer->getSettings() as $setting) {
                 if($setting->getId() < 1) {
                     $em->persist($setting);
                 }
@@ -76,7 +76,7 @@ class SettingController extends Controller
             return $this->redirectToRoute('_fbeen_settings_developer');
         }
 
-        return $this->render('FbeenSettingsBundle:Settings:developer.html.twig', array(
+        return $this->render('@FbeenSettingsBundle/Resources/views/modify.html.twig', array(
             'form' => $form->createView(),
         ));
     }

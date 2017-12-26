@@ -2,9 +2,10 @@
 
 namespace Fbeen\SettingsBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Fbeen\SettingsBundle\Model\Settings;
+use Fbeen\SettingsBundle\Model\SettingContainer;
 
 /**
  * Description of SettingsHelper
@@ -13,13 +14,13 @@ use Fbeen\SettingsBundle\Model\Settings;
  */
 class SettingsHelper
 {
-    private $container;
+    private $em;
     private $settings;
     
-    public function __construct(ContainerInterface $container)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->container = $container;
-        $this->initialize();
+        $this->em = $em;
+        $this->settings = $em->getRepository('FbeenSettingsBundle:Setting')->findAll();
     }
     
     public function getTypes()
@@ -34,24 +35,31 @@ class SettingsHelper
         );
     }
     
-    public function initialize()
+    public function getSettingContainer()
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        
-        $settings = $em->getRepository('FbeenSettingsBundle:Setting')->findAll();
+        $settingContainer = new SettingContainer();
+        $settingContainer->setSettings(new ArrayCollection($this->settings));
 
-        $this->settings = new Settings();
-        $this->settings->setSettings(new ArrayCollection($settings));
+        return $settingContainer;
     }
     
-    public function getSettings()
+    public function updateSetting($identifier, $value)
     {
-        return $this->settings;
+        foreach($this->settings as $setting) {
+            if($setting->getIdentifier() == $identifier) {
+                $setting->setValue($value);
+                $this->em->flush();
+                
+                return true;
+            }
+        }
+        
+        throw new NotFoundHttpException("Setting with identifier '" . $identifier . "' not found.");        
     }
     
     public function getSetting($identifier)
     {
-        foreach($this->settings->getSettings() as $setting)
+        foreach($this->settings as $setting)
         {
             if($setting->getIdentifier() == $identifier)
             {
@@ -59,6 +67,6 @@ class SettingsHelper
             }
         }
         
-        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("Setting with identifier '" . $identifier . "' not found.");
+        throw new NotFoundHttpException("Setting with identifier '" . $identifier . "' not found.");
     }
 }

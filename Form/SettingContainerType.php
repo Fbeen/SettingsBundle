@@ -7,9 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Fbeen\SettingsBundle\Form\DevSettingType;
+use Fbeen\SettingsBundle\Form\SettingType;
 
-class DevSettingsType extends AbstractType
+class SettingContainerType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -19,10 +19,8 @@ class DevSettingsType extends AbstractType
         $builder
             ->add('settings', CollectionType::class, array(
                 'label' => false,
-                'entry_type' => DevSettingType::class,
-                'entry_options' => array('label' => false),
-                'allow_add' => true,
-                'allow_delete' => true
+                'entry_type' => SettingType::class,
+                'entry_options' => array('label' => false)
             ))
         ;
     }
@@ -33,7 +31,8 @@ class DevSettingsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Fbeen\SettingsBundle\Model\Settings'
+            'data_class' => 'Fbeen\SettingsBundle\Model\SettingContainer',
+            'dev_mode' => true
         ));
     }
 
@@ -42,7 +41,7 @@ class DevSettingsType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'fbeen_settingsbundle_settings';
+        return 'fbeen_settingsbundle_settingcontainer';
     }
 
 

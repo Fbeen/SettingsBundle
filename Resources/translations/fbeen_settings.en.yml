@@ -1,0 +1,9 @@
+settings: Settings
+modify_settings: Modify settings
+save: Save
+delete: Delete
+add_new: Add new
+identifier: Identifier
+type: Type
+value: Value
+required: Required

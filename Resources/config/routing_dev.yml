@@ -1,4 +1,4 @@
 _fbeen_settings_developer:
-    path:      /settings/developer
-    defaults:  { _controller: FbeenSettingsBundle:Setting:developer }
+    path:      /settings/modify
+    defaults:  { _controller: FbeenSettingsBundle:Setting:modify }
     methods:  [GET, POST]
