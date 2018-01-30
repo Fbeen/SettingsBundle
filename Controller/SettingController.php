@@ -29,7 +29,7 @@ class SettingController extends Controller
             return $this->redirectToRoute('fbeen_settings_edit');
         }
 
-        return $this->render('@FbeenSettingsBundle/Resources/views/edit.html.twig', array(
+        return $this->render('@FbeenSettings/edit.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -76,7 +76,7 @@ class SettingController extends Controller
             return $this->redirectToRoute('_fbeen_settings_developer');
         }
 
-        return $this->render('@FbeenSettingsBundle/Resources/views/modify.html.twig', array(
+        return $this->render('@FbeenSettings/modify.html.twig', array(
             'form' => $form->createView(),
         ));
     }
